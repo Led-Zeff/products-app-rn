@@ -1,7 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
-  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -18,25 +17,17 @@ import loginTheme from '../theme/loginTheme';
 
 interface Props extends StackScreenProps<any, any> {}
 
-export const LoginScreen = ({ navigation }: Props) => {
-  const { signIn, errorMessage, removeError } = useContext(AuthContext);
+export const RegisterScreen = ({ navigation }: Props) => {
+  const { signUp } = useContext(AuthContext);
   const {
-    value: { email, password },
+    value: { name, email, password },
     onChange,
-  } = useForm({ email: 'tom@tom.tom', password: '123456' });
+  } = useForm({ name: '', email: '', password: '' });
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     Keyboard.dismiss();
-    signIn({ correo: email, password });
+    signUp({ nombre: name, correo: email, password });
   };
-
-  useEffect(() => {
-    if (errorMessage) {
-      Alert.alert('Login failure', errorMessage, [
-        { text: 'Ok', onPress: removeError },
-      ]);
-    }
-  }, [errorMessage, removeError]);
 
   return (
     <>
@@ -48,19 +39,31 @@ export const LoginScreen = ({ navigation }: Props) => {
         <View style={loginTheme.formContainer}>
           <WhiteLogo />
 
-          <Text style={loginTheme.title}>Login</Text>
+          <Text style={loginTheme.title}>Register</Text>
+
+          <TextInput
+            placeholder="Name"
+            placeholderTextColor="#f3e5f5"
+            keyboardType="email-address"
+            underlineColorAndroid="white"
+            autoCapitalize="words"
+            autoCorrect={false}
+            style={loginTheme.input}
+            onChangeText={val => onChange(val, 'name')}
+            value={name}
+            onSubmitEditing={handleRegister}
+          />
 
           <TextInput
             placeholder="Email"
             placeholderTextColor="#f3e5f5"
             keyboardType="email-address"
             underlineColorAndroid="white"
-            autoCapitalize="none"
-            autoCorrect={false}
+            autoCapitalize={'none'}
             style={loginTheme.input}
             onChangeText={val => onChange(val, 'email')}
             value={email}
-            onSubmitEditing={handleLogin}
+            onSubmitEditing={handleRegister}
           />
 
           <TextInput
@@ -72,23 +75,25 @@ export const LoginScreen = ({ navigation }: Props) => {
             style={loginTheme.input}
             onChangeText={val => onChange(val, 'password')}
             value={password}
-            onSubmitEditing={handleLogin}
+            onSubmitEditing={handleRegister}
           />
 
           <View style={loginTheme.buttonContainer}>
             <TouchableOpacity
               style={loginTheme.button}
               activeOpacity={0.8}
-              onPress={handleLogin}>
-              <Text style={loginTheme.buttonText}>Sign in</Text>
+              onPress={handleRegister}>
+              <Text style={loginTheme.buttonText}>Sign up</Text>
             </TouchableOpacity>
           </View>
 
           <View style={loginTheme.registerContainer}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => navigation.navigate('Register')}>
-              <Text style={loginTheme.buttonText}>Register</Text>
+              onPress={() => navigation.pop()}>
+              <Text style={loginTheme.buttonText}>
+                Already have an account?
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
