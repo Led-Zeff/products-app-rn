@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const signIn = async (user: LoginRequest) => {
     try {
+      console.log(user)
       const {
         data: { token, usuario },
       } = await kaffeeApi.post<LoginResponse>('/auth/login', user);
@@ -38,7 +39,8 @@ export const AuthProvider = ({ children }: any) => {
       dispatch({ type: 'sign-in', payload: { token, user: usuario } });
       AsyncStorage.setItem('token', token);
     } catch (error) {
-      console.log(error.response?.data?.msg);
+      console.log('error');
+      console.log(error);
       dispatch({
         type: 'set-error',
         payload: error.response?.data?.msg ?? 'An error ocurred',

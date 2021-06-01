@@ -23,3 +23,8 @@ export interface SignUpRequest {
   correo: string;
   password: string;
 }
+
+export interface UserOverview {
+  _id: string;
+  nombre: string;
+}

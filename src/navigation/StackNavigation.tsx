@@ -1,10 +1,10 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { HomeScreen } from '../screens/HomeScreen';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { LoginScreen } from '../screens/LoginScreen';
 import { RegisterScreen } from '../screens/RegisterScreen';
+import { ProductsNavigator } from './ProductsNavigator';
 
 const Stack = createStackNavigator();
 
@@ -22,7 +22,7 @@ export const StackNavigation = () => {
         cardStyle: { backgroundColor: 'white' },
       }}>
       {status === 'authenticated' ? (
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="ProductsNav" component={ProductsNavigator} />
       ) : (
         <>
           <Stack.Screen name="Login" component={LoginScreen} />
